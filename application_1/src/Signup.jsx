@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Suspense } from "react";
 import { useLoaderData, Await } from "react-router-dom";
+import axios from "axios";
+import BACKEND_URL from "./services/api";
 function Signup() {
   const { value } = useLoaderData();
   return (
@@ -21,7 +23,6 @@ function Signup() {
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
-    username: "",
     email: "",
     password: "",
   });
@@ -34,9 +35,10 @@ const SignupForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // database call here
+    let data = await axios.post(`${BACKEND_URL}/sso/api/signup`, formData);
+    console.log(data.data);
     console.log("form submitted!");
   };
 
@@ -44,16 +46,6 @@ const SignupForm = () => {
     <div>
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username:</label>
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-        </div>
         <div>
           <label>Email:</label>
           <input

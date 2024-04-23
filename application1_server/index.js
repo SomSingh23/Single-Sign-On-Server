@@ -19,24 +19,4 @@ app.get("/", (req, res) => {
     .status(200)
     .json({ message: "Application1 server up and running" });
 });
-app.post("/api/app1/verify", async (req, res) => {
-  console.log(req.body);
-  await waitSeconds();
-  console.log("resolved in 1 second");
-  // ask sso for this token
-  res.status(200).json({ value: true });
-});
-app.post("/api/app1/signup", async (req, res) => {
-  console.log(req.body);
-  await waitSeconds();
-  console.log("resolved in 1 second");
-  // ask sso for this token
-  res.status(200).json({ value: true });
-});
-app.post("/api/app1/login", async (req, res) => {
-  console.log(req.body);
-  await waitSeconds();
-  console.log("resolved in 1 second");
-  // ask sso for this token
-  res.status(200).json({ value: true });
-});
+// other routes of application1 as per requirement

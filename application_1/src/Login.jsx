@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Suspense } from "react";
 import { useLoaderData, Await } from "react-router-dom";
+import axios from "axios";
+import BACKEND_URL from "./services/api";
 function Login() {
   const { value } = useLoaderData();
   return (
@@ -21,7 +23,7 @@ function Login() {
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -33,10 +35,11 @@ const LoginForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // You can add login authentication logic here
-    console.log(formData);
+    let data = await axios.post(`${BACKEND_URL}/sso/api/login`, formData);
+    console.log(data.data);
+    console.log("form submitted!");
   };
 
   return (
@@ -44,11 +47,11 @@ const LoginForm = () => {
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Username:</label>
+          <label>Email:</label>
           <input
-            type="text"
-            name="username"
-            value={formData.username}
+            type="email"
+            name="email"
+            value={formData.email}
             onChange={handleChange}
             required
           />
