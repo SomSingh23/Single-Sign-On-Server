@@ -6,23 +6,28 @@ import "./index.css";
 import Signup from "./Signup.jsx";
 import Login from "./Login.jsx";
 import Protected from "./Protected.jsx";
+import isAuthenticated from "./isAuthenticated.js";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    loader: isAuthenticated,
   },
   {
     path: "/signup",
     element: <Signup />,
+    loader: isAuthenticated,
   },
   {
     path: "/login",
     element: <Login />,
+    loader: isAuthenticated,
   },
 
   {
     path: "/protected",
     element: <Protected />,
+    loader: isAuthenticated,
   },
   {
     path: "*",
