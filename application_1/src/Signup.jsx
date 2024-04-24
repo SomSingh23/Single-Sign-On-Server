@@ -13,9 +13,19 @@ function Signup() {
         <Await resolve={value}>
           {(value) => {
             if (value === true) {
-              return <h1>You are Logged In 🙋</h1>;
+              return (
+                <>
+                  <Navbar isLogout={true} />
+                  <h1>You are Logged In 🙋</h1>
+                </>
+              );
             }
-            return <SignupForm />;
+            return (
+              <>
+                <Navbar isLogout={false} />
+                <SignupForm />
+              </>
+            );
           }}
         </Await>
       </Suspense>
@@ -48,6 +58,9 @@ const SignupForm = () => {
         localStorage.setItem("token", data.data.token);
 
         setSuccess(true);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       } else throw new Error("Signup failed");
     } catch (err) {
       setAlreadyThere(true);
@@ -57,10 +70,16 @@ const SignupForm = () => {
       console.log(err);
     }
   };
-  if (success) return <h1>Signup Successful, Your Logged In 🙋</h1>;
+  if (success)
+    return (
+      <>
+        <h1>Signup Successful, Your Logged In 🙋</h1>
+        <p>Page will automatically reload after 2 second</p>
+      </>
+    );
   return (
     <div>
-      {alreadyThere === true ? <h1>User Already Exists ❗</h1> : <h1></h1>}
+      {alreadyThere === true ? <h1>User Already Exists 🙅</h1> : <h1></h1>}
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <div>

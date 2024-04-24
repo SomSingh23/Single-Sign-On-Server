@@ -12,9 +12,18 @@ function Login() {
         <Await resolve={value}>
           {(value) => {
             if (value === true) {
-              return <h1>You are Logged In 🙋</h1>;
+              return (
+                <>
+                  <Navbar isLogout={true} /> <h1>You are Logged In 🙋</h1>
+                </>
+              );
             }
-            return <LoginForm />;
+            return (
+              <>
+                <Navbar isLogout={false} />
+                <LoginForm />
+              </>
+            );
           }}
         </Await>
       </Suspense>
@@ -46,6 +55,9 @@ const LoginForm = () => {
         console.log("form submitted! user logged in");
         localStorage.setItem("token", data.data.token);
         setSuccess(true);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       } else throw new Error("Login failed");
     } catch (err) {
       setLoginFailed(true);
@@ -55,7 +67,13 @@ const LoginForm = () => {
       console.log(err);
     }
   };
-  if (success) return <h1>Login Successful, You are Logged In 🙋</h1>;
+  if (success)
+    return (
+      <>
+        <h1>Login Successful, You are Logged In 🙋</h1>
+        <p>Page will automatically reload after 2 second</p>
+      </>
+    );
   return (
     <div>
       {loginFailed && <h3>Login Failed 🙅</h3>}

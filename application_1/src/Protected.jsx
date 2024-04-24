@@ -9,9 +9,19 @@ function Protected() {
         <Await resolve={value}>
           {(value) => {
             if (value !== true) {
-              return <h1>Not Authenticated</h1>;
+              return (
+                <>
+                  <Navbar isLogout={false} />
+                  <h1>Not Authenticated</h1>
+                </>
+              );
             }
-            return <h1>Protected Data will be shown here</h1>;
+            return (
+              <>
+                <Navbar isLogout={true} />
+                <h1>Protected Data will be shown here</h1>
+              </>
+            );
           }}
         </Await>
       </Suspense>
