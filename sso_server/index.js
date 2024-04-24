@@ -36,7 +36,7 @@ app.post("/sso/api/login", async (req, res) => {
     res.status(200).json({ success: true, token: token });
   } else {
     console.log("User not found");
-    res.status(404).json({ message: "User not found" });
+    res.status(404).json({ success: false, message: "User not found" });
   }
 });
 app.post("/sso/api/signup", async (req, res) => {

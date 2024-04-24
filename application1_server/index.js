@@ -12,11 +12,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.listen(3001, () => {
-  console.log("Application1 server started on port 3001");
+  console.log("Application 1 server started on port 3001");
 });
 app.get("/", (req, res) => {
   return res
     .status(200)
-    .json({ message: "Application1 server up and running" });
+    .json({ message: "Application 1 server up and running" });
 });
-// other routes of application1 as per requirement
+// other routes of application 1 as per requirement 👇
