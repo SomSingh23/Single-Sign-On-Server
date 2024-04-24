@@ -19,7 +19,7 @@ function App() {
             return (
               <>
                 <Navbar isLogout={false} />
-                <h1>Application 1 Home Page</h1>
+                <h1>Application 3 Home Page</h1>
                 <h1>Not Logged In 💀</h1>
               </>
             );

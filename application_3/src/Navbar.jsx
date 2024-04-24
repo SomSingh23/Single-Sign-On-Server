@@ -5,6 +5,7 @@ export default function Navbar({ isLogout }) {
     <>
       <div className="main_navbar">
         <div className="navbar">
+          <h2>APP3</h2>
           <Link to="/">Home</Link>
           {!isLogout && <Link to="/signup">Signup</Link>}
           {!isLogout && <Link to="/login">Login</Link>}
