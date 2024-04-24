@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { useLoaderData, Await } from "react-router-dom";
 import axios from "axios";
 import BACKEND_URL from "./services/api";
+import Navbar from "./Navbar";
 function Signup() {
   const { value } = useLoaderData();
 
@@ -12,7 +13,7 @@ function Signup() {
         <Await resolve={value}>
           {(value) => {
             if (value === true) {
-              return <h1>Authenticated</h1>;
+              return <h1>You are Logged In 🙋</h1>;
             }
             return <SignupForm />;
           }}
@@ -56,10 +57,10 @@ const SignupForm = () => {
       console.log(err);
     }
   };
-  if (success) return <h1>Signup Successful, Your Logged In</h1>;
+  if (success) return <h1>Signup Successful, Your Logged In 🙋</h1>;
   return (
     <div>
-      {alreadyThere === true ? <h1>User Already Exists</h1> : <h1></h1>}
+      {alreadyThere === true ? <h1>User Already Exists ❗</h1> : <h1></h1>}
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <div>

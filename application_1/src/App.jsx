@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { useLoaderData, Await } from "react-router-dom";
+import Navbar from "./Navbar";
 function App() {
   const { value } = useLoaderData();
   return (
@@ -8,9 +9,20 @@ function App() {
         <Await resolve={value}>
           {(value) => {
             if (value === true) {
-              return <h1>Authenticated</h1>;
+              return (
+                <>
+                  <Navbar isLogout={true} />
+                  <h1>You are Logged In 🙋</h1>
+                </>
+              );
             }
-            return <h1>Home Page Here</h1>;
+            return (
+              <>
+                <Navbar isLogout={false} />
+                <h1>Application 1 Home Page</h1>
+                <h1>Not Logged In 💀</h1>
+              </>
+            );
           }}
         </Await>
       </Suspense>

@@ -7,6 +7,8 @@ import Signup from "./Signup.jsx";
 import Login from "./Login.jsx";
 import Protected from "./Protected.jsx";
 import isAuthenticated from "./isAuthenticated.js";
+import Logout from "./Logout.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,6 +30,10 @@ const router = createBrowserRouter([
     path: "/protected",
     element: <Protected />,
     loader: isAuthenticated,
+  },
+  {
+    path: "/logout",
+    element: <Logout />,
   },
   {
     path: "*",

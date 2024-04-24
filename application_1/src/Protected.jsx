@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { useLoaderData, Await } from "react-router-dom";
+import Navbar from "./Navbar";
 function Protected() {
   const { value } = useLoaderData();
   return (
