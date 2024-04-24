@@ -33,7 +33,7 @@ app.post("/sso/api/login", async (req, res) => {
       { email: userdata.email },
       { jwt_secret: newSecret }
     );
-    res.status(200).json({ token: token });
+    res.status(200).json({ success: true, token: token });
   } else {
     console.log("User not found");
     res.status(404).json({ message: "User not found" });
@@ -45,14 +45,16 @@ app.post("/sso/api/signup", async (req, res) => {
     if (data) {
       throw new Error("User already exists");
     }
+    let newSecret = generateRandomString(20);
     let user = new User({
       email: req.body.email,
       password: req.body.password,
-      jwt_secret: generateRandomString(20),
+      jwt_secret: newSecret,
     });
     await user.save();
     console.log("User created");
-    res.status(200).json({ success: true });
+    let token = jwt.sign({ email: user.email }, newSecret);
+    res.status(200).json({ success: true, token });
   } catch (err) {
     console.log(err);
     res.status(500).json({ success: false });
@@ -60,7 +62,26 @@ app.post("/sso/api/signup", async (req, res) => {
 });
 
 app.post("/sso/api/verify", async (req, res) => {
-  console.log(req.body);
-
-  res.status(200).json({ value: false });
+  try {
+    let token = req.body.token;
+    if (token === undefined || token === null)
+      throw new Error("Token not found");
+    let data = jwt.decode(token);
+    let user = await User.findOne({
+      email: data.email,
+    });
+    if (!user) {
+      throw new Error("User not found");
+    }
+    let ans = jwt.verify(token, user.jwt_secret);
+    console.log(ans);
+    if (ans) {
+      res.status(200).json({ value: true });
+    } else {
+      throw new Error("Token not verified");
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(200).json({ value: false });
+  }
 });

@@ -5,6 +5,7 @@ import axios from "axios";
 import BACKEND_URL from "./services/api";
 function Signup() {
   const { value } = useLoaderData();
+
   return (
     <>
       <Suspense fallback={<h1>Loading...</h1>}>
@@ -22,6 +23,8 @@ function Signup() {
 }
 
 const SignupForm = () => {
+  const [alreadyThere, setAlreadyThere] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -36,14 +39,27 @@ const SignupForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    let data = await axios.post(`${BACKEND_URL}/sso/api/signup`, formData);
-    console.log(data.data);
-    console.log("form submitted!");
-  };
+    try {
+      e.preventDefault();
+      let data = await axios.post(`${BACKEND_URL}/sso/api/signup`, formData);
+      if (data.data.success) {
+        console.log("form submitted! user created");
+        localStorage.setItem("token", data.data.token);
 
+        setSuccess(true);
+      } else throw new Error("Signup failed");
+    } catch (err) {
+      setAlreadyThere(true);
+      setTimeout(() => {
+        setAlreadyThere(false);
+      }, 2000);
+      console.log(err);
+    }
+  };
+  if (success) return <h1>Signup Successful, Your Logged In</h1>;
   return (
     <div>
+      {alreadyThere === true ? <h1>User Already Exists</h1> : <h1></h1>}
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <div>
