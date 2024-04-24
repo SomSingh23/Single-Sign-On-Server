@@ -1,0 +1,12 @@
+h1 {
+  text-align: center;
+}
+h2 {
+  text-align: center;
+}
+/* styles.css */
+body {
+  background: linear-gradient(to bottom right, #f9dede, #d3dad6);
+  margin: 0;
+  padding: 0;
+}

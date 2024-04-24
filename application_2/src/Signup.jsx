@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Suspense } from "react";
 import { useLoaderData, Await } from "react-router-dom";
 import axios from "axios";
-import Navbar from "./Navbar";
 import BACKEND_URL from "./services/api";
-function Login() {
+import Navbar from "./Navbar";
+function Signup() {
   const { value } = useLoaderData();
+
   return (
     <>
       <Suspense fallback={<h1>Loading...</h1>}>
@@ -14,14 +15,15 @@ function Login() {
             if (value === true) {
               return (
                 <>
-                  <Navbar isLogout={true} /> <h1>You are Logged In 🙋</h1>
+                  <Navbar isLogout={true} />
+                  <h1>You are Logged In 🙋</h1>
                 </>
               );
             }
             return (
               <>
                 <Navbar isLogout={false} />
-                <LoginForm />
+                <SignupForm />
               </>
             );
           }}
@@ -31,8 +33,8 @@ function Login() {
   );
 }
 
-const LoginForm = () => {
-  const [loginFailed, setLoginFailed] = useState(false);
+const SignupForm = () => {
+  const [alreadyThere, setAlreadyThere] = useState(false);
   const [success, setSuccess] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -48,21 +50,22 @@ const LoginForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
     try {
-      let data = await axios.post(`${BACKEND_URL}/sso/api/login`, formData);
+      e.preventDefault();
+      let data = await axios.post(`${BACKEND_URL}/sso/api/signup`, formData);
       if (data.data.success) {
-        console.log("form submitted! user logged in");
+        console.log("form submitted! user created");
         localStorage.setItem("token", data.data.token);
+
         setSuccess(true);
         setTimeout(() => {
           window.location.reload();
         }, 2000);
-      } else throw new Error("Login failed");
+      } else throw new Error("Signup failed");
     } catch (err) {
-      setLoginFailed(true);
+      setAlreadyThere(true);
       setTimeout(() => {
-        setLoginFailed(false);
+        setAlreadyThere(false);
       }, 2000);
       console.log(err);
     }
@@ -70,14 +73,14 @@ const LoginForm = () => {
   if (success)
     return (
       <>
-        <h1>Login Successful, You are Logged In 🙋</h1>
+        <h1>Signup Successful, Your Logged In 🙋</h1>
         <p>Page will automatically reload after 2 second</p>
       </>
     );
   return (
     <div>
-      {loginFailed && <h2>Login Failed 🙅</h2>}
-      <h2>Login</h2>
+      {alreadyThere === true ? <h1>User Already Exists 🙅</h1> : <h1></h1>}
+      <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email:</label>
@@ -99,10 +102,9 @@ const LoginForm = () => {
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Sign Up</button>
       </form>
     </div>
   );
 };
-
-export default Login;
+export default Signup;
