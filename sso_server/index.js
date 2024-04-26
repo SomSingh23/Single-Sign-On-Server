@@ -1,3 +1,4 @@
+require("dotenv").config();
 let express = require("express");
 let app = express();
 let cors = require("cors");
@@ -6,7 +7,7 @@ let User = require("./user");
 const generateRandomString = require("./randomSecret");
 let jwt = require("jsonwebtoken");
 mongoose
-  .connect("mongodb://127.0.0.1:27017/sso_server_user_data_db")
+  .connect(process.env.db)
   .then((p) => console.log("local mongodb connected"))
   .catch((e) => console.log("error in connecting to local mongodb"));
 app.use(cors());
