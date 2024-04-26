@@ -14,7 +14,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.listen(3031, () => {
-  console.log("Application1 server started on port 3031");
+  console.log(`db = ${process.env.db}`);
+  console.log("sso server started on port 3031");
 });
 app.get("/", (req, res) => {
   return res.status(200).json({ message: "SSO Server Up and Running" });

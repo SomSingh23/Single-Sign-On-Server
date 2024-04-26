@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  mongodb_container:
+    container_name: mongodb_container
+    image: mongo:latest
+    restart: always
+
+  node_backend:
+    container_name: node_backend
+    build: .
+    ports:
+      - 3031:3031
+    environment:
+      # instead of localhost put container_name if mentioned or service name
+      - db=mongodb://mongodb_container:27017
+    depends_on:
+      - mongodb_container
+# volumes not used -> data will be erased once container stops
