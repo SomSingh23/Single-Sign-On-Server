@@ -4,6 +4,12 @@ This repository contains the code for implementing Single Sign-On (SSO) using a 
 
 ## Setup Instructions
 
+
+- **Note:** You must have Docker installed locally.
+
+
+
+
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/SomSingh23/SSO_CC_LAB
