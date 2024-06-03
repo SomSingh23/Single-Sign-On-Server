@@ -33,7 +33,7 @@ This repository contains the code for implementing Single Sign-On (SSO) using a 
 
  - Make sure your on the root directory i.e `/SSO_CC_LAB` and open **3** new terminal
 
- - instead of `yarn|yarn install` you can use `npm i|npm install`
+ - instead of `yarn or yarn install` you can use `npm i or npm install`
 
  - instead of `yarn dev`  you can use `npm run dev`
 
